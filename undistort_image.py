@@ -69,15 +69,19 @@ def undistort_point(point, focal, center, dist_coeffs, max_iterations=10, learni
     return undistorted_point
 
 # Display the image on the Tkinter canvas
-def display_image_on_canvas(canvas_img):
+def display_image_on_canvas(canvas_img, scale_factor = 2.0):
     global canvas_widget
     if canvas_widget is not None:
         canvas.delete("all")  # Clear existing canvas content
     height, width = canvas_img.shape[:2]
     # Resize the canvas to match the image size
-    canvas.config(width=width, height=height)
+    new_width = int(width * scale_factor)
+    new_height = int(height * scale_factor)    
+    canvas.config(width=new_width, height=new_height)
     # Convert image array to PhotoImage-compatible format
-    img_pil = Image.fromarray((canvas_img * 255).astype(np.uint8))  # Ensure values are 0-255
+    if canvas_img.dtype != np.uint8:
+        canvas_img = (canvas_img * 255).clip(0, 255).astype(np.uint8)    
+    img_pil = Image.fromarray(canvas_img).resize((new_width, new_height), Image.NEAREST)
     img_tk = ImageTk.PhotoImage(img_pil)
     canvas.create_image(0, 0, anchor="nw", image=img_tk)
     canvas.image_tk = img_tk  # Keep a reference to prevent garbage collection
@@ -162,3 +166,4 @@ if __name__ == "__main__":
     exit_btn = Button(button_frame, text="Exit", command=exit_app)
     exit_btn.grid(row=0, column=4, padx=5, pady=5)
     root.mainloop()
+
