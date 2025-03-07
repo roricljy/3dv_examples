@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from tkinter import Tk, Canvas, Button, Frame
 from PIL import Image, ImageTk
 import os
-gscale = 2 if "ANDROID_STORAGE" in os.environ else 1
+gscale = 2.5 if "ANDROID_STORAGE" in os.environ else 1
 plt.rcParams.update({'font.size': 14*gscale})
 
 # Global variables
@@ -69,14 +69,14 @@ def undistort_point(point, focal, center, dist_coeffs, max_iterations=10, learni
     return undistorted_point
 
 # Display the image on the Tkinter canvas
-def display_image_on_canvas(canvas_img, scale_factor = 2.5):
-    global canvas_widget
+def display_image_on_canvas(canvas_img):
+    global canvas_widget, gscale
     if canvas_widget is not None:
         canvas.delete("all")  # Clear existing canvas content
     height, width = canvas_img.shape[:2]
     # Resize the canvas to match the image size
-    new_width = int(width * scale_factor)
-    new_height = int(height * scale_factor)    
+    new_width = int(width * gscale)
+    new_height = int(height * gscale)    
     canvas.config(width=new_width, height=new_height)
     # Convert image array to PhotoImage-compatible format
     if canvas_img.dtype != np.uint8:
@@ -166,4 +166,3 @@ if __name__ == "__main__":
     exit_btn = Button(button_frame, text="Exit", command=exit_app)
     exit_btn.grid(row=0, column=4, padx=5, pady=5)
     root.mainloop()
-
