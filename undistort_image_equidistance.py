@@ -4,7 +4,7 @@ from tkinter import Tk, Canvas, Button, Frame, Label, Entry
 from PIL import Image, ImageTk
 import os
 
-gscale = 2.5 if "ANDROID_STORAGE" in os.environ else 1
+gscale = 2 if "ANDROID_STORAGE" in os.environ else 1
 plt.rcParams.update({'font.size': 14*gscale})
 
 # Global variables
