@@ -69,7 +69,7 @@ def undistort_point(point, focal, center, dist_coeffs, max_iterations=10, learni
     return undistorted_point
 
 # Display the image on the Tkinter canvas
-def display_image_on_canvas(canvas_img, scale_factor = 2.0):
+def display_image_on_canvas(canvas_img, scale_factor = 3.0):
     global canvas_widget
     if canvas_widget is not None:
         canvas.delete("all")  # Clear existing canvas content
