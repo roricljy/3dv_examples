@@ -12,6 +12,9 @@ plt.rcParams.update({'font.size': 14*gscale})
 image = None
 canvas_widget = None
 
+def normalize_angle(angle):
+    return (angle + 2 * np.pi) % (2 * np.pi)
+
 def erp_to_rect(erp_image, theta, hfov, vfov):
     erp_H, erp_W, channels = erp_image.shape
     f = erp_W / (2 * np.pi)
@@ -19,15 +22,18 @@ def erp_to_rect(erp_image, theta, hfov, vfov):
     rect_W = int(round(2 * f * np.tan(hfov / 2)))
     rect_cx = rect_W / 2
     rect_cy = rect_H / 2
+
     rect_x, rect_y = np.meshgrid(np.arange(rect_W), np.arange(rect_H))
-    xth = np.arctan((rect_x - rect_cx) / f)
-    xth_erp = theta + xth
-    erp_x = (xth_erp * erp_W) / (2 * np.pi) 
+    xth = np.arctan((rect_x - rect_cx) / f)    
+    xth_erp = normalize_angle(theta + xth)
+    erp_x = (xth_erp * erp_W) / (2 * np.pi)
     yf = f / np.cos(xth)
     yth = np.arctan((rect_y - rect_cy) / yf)
     erp_y = (yth * erp_H) / np.pi + erp_H / 2
+    
     erp_xi = np.round(erp_x).astype(np.int32)
     erp_yi = np.round(erp_y).astype(np.int32)
+    
     erp_xi = np.clip(erp_xi, 0, erp_W - 1)
     erp_yi = np.clip(erp_yi, 0, erp_H - 1)
     rect_image = np.zeros((rect_H, rect_W, channels), dtype=erp_image.dtype)
