@@ -5,7 +5,7 @@ from tkinter import Tk, Canvas, Button, Frame, Label, Entry
 from PIL import Image, ImageTk
 import os
 
-gscale = 0.8
+gscale = 1.0
 plt.rcParams.update({'font.size': 14*gscale})
 
 # Global variables
