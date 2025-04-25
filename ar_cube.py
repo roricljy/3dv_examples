@@ -67,7 +67,8 @@ def on_key(event):
 # Tkinter setup
 window = Tk()
 window.title("Real-Time Checkerboard with Cube")
-window.attributes('-fullscreen', True)
+if gscale>1:
+    window.attributes('-fullscreen', True)
 label = Label(window)
 label.pack()
 
