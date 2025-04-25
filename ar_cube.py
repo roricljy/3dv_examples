@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 from tkinter import Tk, Label
 from PIL import Image, ImageTk
+import os
+gscale = 2.5 if "ANDROID_STORAGE" in os.environ else 1
 
 # Checkerboard settings
 pattern_size = (4, 7)
@@ -65,6 +67,7 @@ def on_key(event):
 # Tkinter setup
 window = Tk()
 window.title("Real-Time Checkerboard with Cube")
+window.attributes('-fullscreen', True)
 label = Label(window)
 label.pack()
 
