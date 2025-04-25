@@ -16,6 +16,8 @@ dist_coeffs = np.array([-0.226141, 0.045470, 0.000183, -0.000036, 0], dtype=np.f
 w_value = 0.00207  # Default w value
 
 def apply_distortion_equidistance(points, center, w, dst_center):
+    if w<=0:
+        return points
     ru = np.linalg.norm(points - center, axis=2)
     rd = np.where(ru != 0, np.arctan(w * ru) / w, 0)
     distorted = np.where(ru[..., None] != 0, (points - center) * (rd / ru)[..., None] + dst_center, points)
