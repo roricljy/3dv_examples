@@ -104,7 +104,8 @@ def update_frame():
     # Convert to RGB & show in Tkinter
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     if gscale>1:
-        resized_frame = cv2.resize(rgb_frame, (screen_width, screen_height))
+        rgb_frame = cv2.rotate(rgb_frame, cv2.ROTATE_90_CLOCKWISE)
+        resized_frame = cv2.resize(rgb_frame, (screen_width, screen_height))        
         img = Image.fromarray(resized_frame)
     else:
         img = Image.fromarray(rgb_frame)
