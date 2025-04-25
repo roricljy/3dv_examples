@@ -69,6 +69,8 @@ window = Tk()
 window.title("Real-Time Checkerboard with Cube")
 if gscale>1:
     window.attributes('-fullscreen', True)
+screen_width = window.winfo_screenwidth()
+screen_height = window.winfo_screenheight()    
 label = Label(window)
 label.pack()
 
@@ -77,6 +79,8 @@ window.bind('<Key>', on_key)
 
 # Open camera
 cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
 # Termination criteria
 criteria = (cv2.TermCriteria_EPS + cv2.TermCriteria_MAX_ITER, 30, 0.001)
@@ -99,7 +103,11 @@ def update_frame():
 
     # Convert to RGB & show in Tkinter
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    img = Image.fromarray(rgb_frame)
+    if gscale>1:
+        resized_frame = cv2.resize(rgb_frame, (screen_width, screen_height))
+        img = Image.fromarray(resized_frame)
+    else:
+        img = Image.fromarray(rgb_frame)
     imgtk = ImageTk.PhotoImage(image=img)
     label.imgtk = imgtk
     label.configure(image=imgtk)
