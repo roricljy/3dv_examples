@@ -194,16 +194,17 @@ class ICP2DApp:
         self.ax = self.fig.add_subplot(111)
         self.ax.set_aspect("equal")
         self.ax.grid(True, linestyle="--", alpha=0.4)
-        self.ax.set_title("ICP 2D — Point Set Registration")
-        self.ax.set_xlabel("x")
-        self.ax.set_ylabel("y")
+        self.ax.set_title("ICP 2D — Point Set Registration", fontsize=10 * gscale)
+        self.ax.set_xlabel("x", fontsize=9 * gscale)
+        self.ax.set_ylabel("y", fontsize=9 * gscale)
+        self.ax.tick_params(labelsize=8 * gscale)
 
         # Placeholder scatter objects (updated on generate/step)
         self._scatter_target = self.ax.scatter(
-            [], [], c="blue", s=60, zorder=3
+            [], [], c="blue", s=60 * gscale ** 2, zorder=3
         )
         self._scatter_source = self.ax.scatter(
-            [], [], c="red", s=60, zorder=3
+            [], [], c="red", s=60 * gscale ** 2, zorder=3
         )
 
         # Canvas widget
@@ -379,7 +380,7 @@ class ICP2DApp:
                 tx_, ty_ = self.target[j]
                 ax.plot(
                     [sx, tx_], [sy, ty_],
-                    color="gray", linestyle="--", linewidth=0.8, alpha=0.5,
+                    color="gray", linestyle="--", linewidth=0.8 * gscale, alpha=0.5,
                     zorder=1,
                 )
 
