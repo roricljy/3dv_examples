@@ -9,6 +9,7 @@ Dependencies:
     pip install numpy matplotlib scipy
 """
 
+import os
 import tkinter as tk
 from tkinter import messagebox
 import numpy as np
@@ -26,6 +27,8 @@ N_POINTS = 20           # number of random target points
 POINT_RANGE = (-3.0, 3.0)   # uniform sampling range for x and y
 MAX_ITERATIONS = 100    # safety cap to prevent infinite loops
 ANIMATION_DELAY_MS = 300    # milliseconds between ICP steps
+
+gscale = 1.8 if "ANDROID_STORAGE" in os.environ else 1
 
 
 # ---------------------------------------------------------------------------
@@ -187,7 +190,7 @@ class ICP2DApp:
     # ------------------------------------------------------------------
     def _build_canvas_area(self):
         """Create the matplotlib figure embedded in a tkinter frame."""
-        self.fig = Figure(figsize=(6.4, 4.8), dpi=100)
+        self.fig = Figure(figsize=(6.4 * gscale, 4.8 * gscale), dpi=100)
         self.ax = self.fig.add_subplot(111)
         self.ax.set_aspect("equal")
         self.ax.grid(True, linestyle="--", alpha=0.4)
